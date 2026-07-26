@@ -1,4 +1,5 @@
 services:
+  # ตัวที่ 1: Database (ตามที่คุณพิมพ์มาล่าสุด)
   db:
     image: postgres:16-alpine
     container_name: 69-s3-db-admin
@@ -8,3 +9,15 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=sarunyu.d
       - POSTGRES_DB=sarunyu.d
+
+  # ตัวที่ 2: Admin (สำหรับเข้าหน้าเว็บ pgAdmin)
+  admin:
+    image: dpage/pgadmin4
+    container_name: 69-s3-pgadmin
+    ports:
+      - "8084:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=sarunyu-d@rmutp.ac.th
+      - PGADMIN_DEFAULT_PASSWORD=password
+    depends_on:
+      - db
