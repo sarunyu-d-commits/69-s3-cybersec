@@ -3,7 +3,7 @@ services:
     image: postgres:16-alpine
     container_name: 69-s3-db-admin
     ports:
-      - "8085 80"
+      - "54327:5432"
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=sarunyu.d
