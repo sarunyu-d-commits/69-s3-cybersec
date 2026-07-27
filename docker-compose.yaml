@@ -1,16 +1,16 @@
 services:
-  # ตัวที่ 1: Database (ตามที่คุณพิมพ์มาล่าสุด)
   db:
     image: postgres:16-alpine
-    container_name: 69-s3-db-admin
+    container_name: 69-s3-db
     ports:
       - "54327:5432"
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=sarunyu.d
       - POSTGRES_DB=sarunyu.d
+    volumes:
+      - db_data:/var/lib/postgresql/data
 
-  # ตัวที่ 2: Admin (สำหรับเข้าหน้าเว็บ pgAdmin)
   admin:
     image: dpage/pgadmin4
     container_name: 69-s3-pgadmin
@@ -21,3 +21,6 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=password
     depends_on:
       - db
+
+volumes:
+  db_data:
