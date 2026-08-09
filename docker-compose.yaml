@@ -5,9 +5,9 @@ services:
     ports:
       - "54327:5432"
     environment:
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_USER=sarunyu.d
-      - POSTGRES_DB=sarunyu.d
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_DB=${DB_NAME}
     volumes:
       - db_data:/var/lib/postgresql/data
 
