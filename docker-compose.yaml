@@ -19,7 +19,7 @@ services:
     depends_on:
       - db
   app:
-    image: sarunyu/strapi
+    image: prawee/strapi
     container_name: my_app
     ports:
       - 8080:1337
