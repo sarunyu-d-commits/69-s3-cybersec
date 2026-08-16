@@ -9,7 +9,7 @@ services:
       - POSTGRES_USER=${DATABASE_USER}
       - POSTGRES_DB=${DATABASE_DB}
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
 
   admin:
     image: dpage/pgadmin4
@@ -17,8 +17,8 @@ services:
     ports:
       - 8083:80
     environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+      - PGADMIN_DEFAULT_EMAIL=sarunyu-d@rmutp.ac.th
+      - PGADMIN_DEFAULT_PASSWORD=1p@ssw0rd
     depends_on:
       - db
 
@@ -26,7 +26,7 @@ services:
     image: prawee/strapi
     container_name: my_app
     ports:
-      - 9093:1337
+      - 8080:1337
     environment:
       - DATABASE_CLIENT=postgres
       - DATABASE_NAME=${DATABASE_DB}
@@ -38,4 +38,4 @@ services:
       - db
 
 volumes:
-  db_data:
+  postgres_data:
