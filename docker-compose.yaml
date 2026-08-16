@@ -17,8 +17,8 @@ services:
     ports:
       - 8083:80
     environment:
-      - PGADMIN_DEFAULT_EMAIL=sarunyu-d@rmutp.ac.th
-      - PGADMIN_DEFAULT_PASSWORD=1p@ssw0rd
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     depends_on:
       - db
 
@@ -28,12 +28,12 @@ services:
     ports:
       - 9093:1337
     environment:
-      - DATABASE_CLIENT=postgres
-      - DATABASE_NAME=${DATABASE_DB}
-      - DATABASE_HOST=db
-      - DATABASE_PORT=5432
-      - DATABASE_USERNAME=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_DB=${DATABASE_DB}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_CLIENT=${DATABASE_CLIENT}
     depends_on:
       - db
 
