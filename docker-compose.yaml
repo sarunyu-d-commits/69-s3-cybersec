@@ -9,7 +9,8 @@ services:
       - POSTGRES_USER=${DATABASE_USER}
       - POSTGRES_DB=${DATABASE_DB}
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+
   admin:
     image: dpage/pgadmin4
     container_name: 69-s3-admin
@@ -18,19 +19,23 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-  
+    depends_on:
+      - db
+
   app:
     image: prawee/strapi
-    container_name: 69-s3-app
+    container_name: my_app
     ports:
-      - 9093:1337
+      - 8080:1337
     environment:
+      - DATABASE_CLIENT=postgres
+      - DATABASE_NAME=${DATABASE_DB}
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_USERNAME=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-      - DATABASE_USER=${DATABASE_USER}
-      - DATABASE_DB=${DATABASE_DB}
-      - DATABASE_PORT=${DATABASE_PORT}
-      - DATABASE_HOST=${DATABASE_HOST}
-      - DATABASE_CLIENT=${DATABASE_CLIENT}
+    depends_on:
+      - db
 
 volumes:
-  data:
+  postgres_data:
