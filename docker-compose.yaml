@@ -9,13 +9,7 @@ services:
       - POSTGRES_USER=${DATABASE_USER}
       - POSTGRES_DB=${DATABASE_DB}
     volumes:
-      - data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_DB}"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-
+      - ./data:/var/lib/postgresql/data
   admin:
     image: dpage/pgadmin4
     container_name: 69-s3-admin
@@ -24,28 +18,19 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
-    depends_on:
-      - db
-
+  
   app:
     image: prawee/strapi
     container_name: 69-s3-app
     ports:
       - 9093:1337
     environment:
-      - DATABASE_CLIENT=${DATABASE_CLIENT}
-      - DATABASE_HOST=${DATABASE_HOST}
-      - DATABASE_PORT=${DATABASE_PORT}
-      - DATABASE_NAME=${DATABASE_DB}
-      - DATABASE_USERNAME=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-    restart: unless-stopped
-    depends_on:
-      db:
-        condition: service_healthy
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_DB=${DATABASE_DB}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_CLIENT=${DATABASE_CLIENT}
 
 volumes:
   data:
-  pgadmin_data:
