@@ -1,0 +1,36 @@
+
+{
+  "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzg3NDgzNDM4LCJleHAiOjE3OTAwNzU0Mzh9.xQAEIs8TUISNjmu_ynwjx5ICPg_QGigfviR_3iO9Z-g",
+  "user": {
+    "id": 1,
+    "username": "sarunyu.d",
+    "email": "sarunyu-d@rmutp.ac.th",
+    "provider": "local",
+    "confirmed": true,
+    "blocked": false,
+    "createdAt": "2026-08-23T11:10:38.171Z",
+    "updatedAt": "2026-08-23T11:10:38.171Z"
+  }
+}
+
+
+
+
+
+ {
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzg3NDgzNjQ2LCJleHAiOjE3OTAwNzU2NDZ9.7LaHZVarV1cQMy8P3yHdrz5SoDHszQiDObDuFgbgCMA",
+    "user": {
+      "id": 1,
+      "firstname": "sarunyu.d",
+      "lastname": "daothaisong",
+      "username": null,
+      "email": "sarunyu-d@rmutp.ac.th",
+      "isActive": true,
+      "blocked": false,
+      "preferedLanguage": null,
+      "createdAt": "2026-08-23T10:48:15.218Z",
+      "updatedAt": "2026-08-23T11:05:07.874Z"
+    }
+  }
+}
