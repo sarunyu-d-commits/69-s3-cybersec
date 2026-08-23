@@ -1,34 +1,52 @@
 # REST
 
 ## Login
-POST http://localhost:9093/admin/login
+POST http://localhost:8080/admin/login
 Content-Type: application/json
 
 {
-    "email": "",
-    "password": "",
+    "email": "sarunyu-d@rmutp.ac.th",
+    "password": "1Password",
     "rememberMe": true
 }
 
 ### Login (User)
-POST http://localhost:9093/api/auth/local
+POST http://localhost:8080/api/auth/local
 Content-Type: application/json
 
 {
     "identifier": "",
-    "password": ""
+    "password": "1Password"
 }
 
 ### Signup
-POST http://localhost:9093/api/auth/local/register
+POST http://localhost:8080/api/auth/local/register
 Content-Type: application/json
 
 {
-    "username": "",
-    "email": "",
-    "password": ""
+    "username": "sarunyu.d",
+    "email": "sarunyu-d@rmutp.ac.th",
+    "password": "Password"
 }
 
-## Forgot Password
+### Forgot Password
+POST http://localhost:8080/admin/forgot-password
+Content-Type: application/json
 
-## Profile
+{
+    "email": "sarunyu-d@rmutp.ac.th"
+}
+
+
+
+### Profile
+GET http://localhost:8080/admin/users/me
+Content-Type: application/json
+authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzg3NDgzNjQ2LCJleHAiOjE3OTAwNzU2NDZ9.7LaHZVarV1cQMy8P3yHdrz5SoDHszQiDObDuFgbgCMA
+
+{
+    
+}
+
+
+
