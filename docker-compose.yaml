@@ -17,8 +17,8 @@ services:
     ports:
       - 8083:80
     environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_DEFAULT_EMAIL=nattaphong@rmutp.ac.th
+      - PGADMIN_DEFAULT_PASSWORD=1p@ssw0rd
     depends_on:
       - db
 
