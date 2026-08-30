@@ -29,8 +29,17 @@ Content-Type: application/json
     "password": "Password"
 }
 
-### Forgot Password
+### Forgot Password (Admin)
 POST http://localhost:8080/admin/forgot-password
+Content-Type: application/json
+
+{
+    "email": "sarunyu-d@rmutp.ac.th",
+    "url": "http://localhost:8080/admin"
+}
+
+### Forgot Password (User)
+POST http://localhost:8080/api/auth/forgot-password
 Content-Type: application/json
 
 {
