@@ -19,6 +19,12 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=nattaphong@rmutp.ac.th
       - PGADMIN_DEFAULT_PASSWORD=1p@ssw0rd
+      - PGADMIN_REPLACE_SERVERS_ON_STARTUP=True
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    configs:
+      - source: pgadmin-servers
+        target: /pgadmin4/servers.json
     depends_on:
       - db
 
@@ -40,3 +46,22 @@ services:
 volumes:
   postgres_data:
   pgadmin_data:
+
+configs:
+  pgadmin-servers:
+    content: |
+      {
+        "Servers": {
+          "1": {
+            "Group": "Servers",
+            "Name": "69-s3-db",
+            "Host": "db",
+            "Port": 5432,
+            "MaintenanceDB": "postgres",
+            "Username": "sarunyu",
+            "Password": "password",
+            "SSLMode": "prefer",
+            "KeepAlive": true
+          }
+        }
+      }
