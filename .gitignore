@@ -1,3 +1,4 @@
 .env
 Regit
 pgadmin-data/
+pgadmin-servers.json
