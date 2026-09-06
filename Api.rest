@@ -1,5 +1,8 @@
 # REST
 
+@resetToken = 97ab1e9548e476937345e238442fb7c9ae74624a
+@userResetToken = dabc600ef93cc70714234b9011d09d57e132c3bc32e7b1d6c30a6370039fb1dfd636105d13908c770dabda7d08cb00668463a0458c50b5cef5c0a5ff5f92ca07
+
 ## Login
 POST http://localhost:8080/admin/login
 Content-Type: application/json
@@ -37,11 +40,45 @@ Content-Type: application/json
     "email": "sarunyu-d@rmutp.ac.th"
 }
 
+# Token หลังยิงล่าสุด = {{resetToken}} (ดูได้จากบรรทัดบนสุดของไฟล์)
+# (ยิง forgot-password แต่ละครั้งจะได้ token ใหม่ ทับอันเก่า:
+#  docker exec 69-s3-db psql -U sarunyu -d sarunyu -t -c "SELECT reset_password_token FROM admin_users WHERE email='sarunyu-d@rmutp.ac.th';")
+
+### Reset Password (Admin)
+POST http://localhost:8080/admin/reset-password
+Content-Type: application/json
+
+{
+    "password": "1Password",
+    "resetPasswordToken": "{{resetToken}}"
+}
+
+### Forgot Password (User)
+POST http://localhost:8080/api/auth/forgot-password
+Content-Type: application/json
+
+{
+    "email": "sarunyu-d@rmutp.ac.th"
+}
+
+# Token หลังยิงล่าสุด = {{userResetToken}} (ดูได้จากบรรทัดบนสุดของไฟล์)
+# (ยิง forgot-password แต่ละครั้งจะได้ token ใหม่ ทับอันเก่า:
+#  docker exec 69-s3-db psql -U sarunyu -d sarunyu -t -c "SELECT reset_password_token FROM up_users WHERE email='sarunyu-d@rmutp.ac.th';")
+
+### Reset Password (User)
+POST http://localhost:8080/api/auth/reset-password
+Content-Type: application/json
+
+{
+    "code": "{{userResetToken}}",
+    "password": "Password",
+    "passwordConfirmation": "Password"
+}
 
 ### Profile
 GET http://localhost:8080/admin/users/me
 Content-Type: application/json
-authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzg3NDgzNjQ2LCJleHAiOjE3OTAwNzU2NDZ9.7LaHZVarV1cQMy8P3yHdrz5SoDHszQiDObDuFgbgCMA
+authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzg4NjgxNjM0LCJleHAiOjE3OTEyNzM2MzR9.juZlLa7qpdaRevrasDUvFBb13pKYESlV0NdCydM1bBI
 
 {
     
