@@ -15,8 +15,8 @@ POST http://localhost:8080/api/auth/local
 Content-Type: application/json
 
 {
-    "identifier": "",
-    "password": "1Password"
+    "identifier": "sarunyu-d@rmutp.ac.th",
+    "password": "Password"
 }
 
 ### Signup
@@ -34,18 +34,8 @@ POST http://localhost:8080/admin/forgot-password
 Content-Type: application/json
 
 {
-    "email": "sarunyu-d@rmutp.ac.th",
-    "url": "http://localhost:8080/admin"
-}
-
-### Forgot Password (User)
-POST http://localhost:8080/api/auth/forgot-password
-Content-Type: application/json
-
-{
     "email": "sarunyu-d@rmutp.ac.th"
 }
-
 
 
 ### Profile
