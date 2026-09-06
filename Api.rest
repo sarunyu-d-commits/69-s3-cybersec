@@ -40,9 +40,6 @@ Content-Type: application/json
     "email": "sarunyu-d@rmutp.ac.th"
 }
 
-# Token หลังยิงล่าสุด = {{resetToken}} (ดูได้จากบรรทัดบนสุดของไฟล์)
-# (ยิง forgot-password แต่ละครั้งจะได้ token ใหม่ ทับอันเก่า:
-#  docker exec 69-s3-db psql -U sarunyu -d sarunyu -t -c "SELECT reset_password_token FROM admin_users WHERE email='sarunyu-d@rmutp.ac.th';")
 
 ### Reset Password (Admin)
 POST http://localhost:8080/admin/reset-password
@@ -61,9 +58,6 @@ Content-Type: application/json
     "email": "sarunyu-d@rmutp.ac.th"
 }
 
-# Token หลังยิงล่าสุด = {{userResetToken}} (ดูได้จากบรรทัดบนสุดของไฟล์)
-# (ยิง forgot-password แต่ละครั้งจะได้ token ใหม่ ทับอันเก่า:
-#  docker exec 69-s3-db psql -U sarunyu -d sarunyu -t -c "SELECT reset_password_token FROM up_users WHERE email='sarunyu-d@rmutp.ac.th';")
 
 ### Reset Password (User)
 POST http://localhost:8080/api/auth/reset-password
@@ -83,6 +77,3 @@ authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0Ijox
 {
     
 }
-
-
-
