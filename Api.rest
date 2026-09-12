@@ -2,78 +2,104 @@
 
 @resetToken = 97ab1e9548e476937345e238442fb7c9ae74624a
 @userResetToken = dabc600ef93cc70714234b9011d09d57e132c3bc32e7b1d6c30a6370039fb1dfd636105d13908c770dabda7d08cb00668463a0458c50b5cef5c0a5ff5f92ca07
+@baseUrl = {{$dotenv BASE_URL}}
 
-## Login
-POST http://localhost:8080/admin/login
+@adminEmail = {{$dotenv ADMIN_EMAIL}}
+@adminPassword = {{$dotenv ADMIN_PASSWORD}}
+@adminNewPassword = {{$dotenv ADMIN_NEW_PASSWORD}}
+
+@userName = {{$dotenv USER_NAME}}
+@userEmail = {{$dotenv USER_EMAIL}}
+@userPassword = {{$dotenv USER_PASSWORD}}
+@userNewPassword = {{$dotenv USER_NEW_PASSWORD}}
+
+
+## 1. Admin Section
+
+### 1.1 Login (Admin)
+# @name adminLogin
+POST {{baseUrl}}/admin/login
 Content-Type: application/json
 
 {
-    "email": "sarunyu-d@rmutp.ac.th",
-    "password": "1Password",
-    "rememberMe": true
+    "email": "{{adminEmail}}",
+    "password": "{{adminPassword}}"
 }
 
-### Login (User)
-POST http://localhost:8080/api/auth/local
+###
+@adminToken = {{adminLogin.response.body.data.token}}
+
+### 1.2 Forgot Password (Admin)
+POST {{baseUrl}}/admin/forgot-password
 Content-Type: application/json
 
 {
-    "identifier": "sarunyu-d@rmutp.ac.th",
-    "password": "Password"
+    "email": "{{adminEmail}}",
+    "url": "{{baseUrl}}/admin"
 }
 
-### Signup
-POST http://localhost:8080/api/auth/local/register
+###
+@adminResetToken = 38d7434fe1a1cf03d0cd2e3bdd4a77d80893d650
+
+### 1.3 Reset Password (Admin)
+POST {{baseUrl}}/admin/reset-password
 Content-Type: application/json
 
 {
-    "username": "sarunyu.d",
-    "email": "sarunyu-d@rmutp.ac.th",
-    "password": "Password"
+    "resetPasswordToken": "{{adminResetToken}}",
+    "password": "{{adminNewPassword}}"
 }
 
-### Forgot Password (Admin)
-POST http://localhost:8080/admin/forgot-password
+### 1.4 Profile (Admin)
+GET {{baseUrl}}/admin/users/me
+Authorization: Bearer {{adminToken}}
+
+## 2. User Section
+
+### 2.1 Signup (User)
+POST {{baseUrl}}/api/auth/local/register
 Content-Type: application/json
 
 {
-    "email": "sarunyu-d@rmutp.ac.th"
+    "username": "{{userName}}",
+    "email": "{{userEmail}}",
+    "password": "{{userPassword}}"
 }
 
-
-### Reset Password (Admin)
-POST http://localhost:8080/admin/reset-password
+### 2.2 Login (User)
+# @name userLogin
+POST {{baseUrl}}/api/auth/local
 Content-Type: application/json
 
 {
-    "password": "1Password",
-    "resetPasswordToken": "{{resetToken}}"
+    "identifier": "{{userEmail}}",
+    "password": "{{userPassword}}"
 }
 
-### Forgot Password (User)
-POST http://localhost:8080/api/auth/forgot-password
+###
+@userToken = {{userLogin.response.body.jwt}}
+
+### 2.3 Forgot Password (User)
+POST {{baseUrl}}/api/auth/forgot-password
 Content-Type: application/json
 
 {
-    "email": "sarunyu-d@rmutp.ac.th"
+    "email": "{{userEmail}}"
 }
 
+###
+@userResetToken = 
 
-### Reset Password (User)
-POST http://localhost:8080/api/auth/reset-password
+### 2.4 Reset Password (User)
+POST {{baseUrl}}/api/auth/reset-password
 Content-Type: application/json
 
 {
     "code": "{{userResetToken}}",
-    "password": "Password",
-    "passwordConfirmation": "Password"
+    "password": "{{userNewPassword}}",
+    "passwordConfirmation": "{{userNewPassword}}"
 }
 
-### Profile
-GET http://localhost:8080/admin/users/me
-Content-Type: application/json
-authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzg4NjgxNjM0LCJleHAiOjE3OTEyNzM2MzR9.juZlLa7qpdaRevrasDUvFBb13pKYESlV0NdCydM1bBI
-
-{
-    
-}
+### 2.5 Profile (User)
+GET {{baseUrl}}/api/users/me
+Authorization: Bearer {{userToken}}
