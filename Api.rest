@@ -1,7 +1,5 @@
 # REST
 
-@resetToken = 97ab1e9548e476937345e238442fb7c9ae74624a
-@userResetToken = dabc600ef93cc70714234b9011d09d57e132c3bc32e7b1d6c30a6370039fb1dfd636105d13908c770dabda7d08cb00668463a0458c50b5cef5c0a5ff5f92ca07
 @baseUrl = {{$dotenv BASE_URL}}
 
 @adminEmail = {{$dotenv ADMIN_EMAIL}}
@@ -34,12 +32,11 @@ POST {{baseUrl}}/admin/forgot-password
 Content-Type: application/json
 
 {
-    "email": "{{adminEmail}}",
-    "url": "{{baseUrl}}/admin"
+    "email": "{{adminEmail}}"
 }
 
 ###
-@adminResetToken = 38d7434fe1a1cf03d0cd2e3bdd4a77d80893d650
+@adminResetToken = {{$dotenv ADMIN_RESET_TOKEN}}
 
 ### 1.3 Reset Password (Admin)
 POST {{baseUrl}}/admin/reset-password
@@ -88,7 +85,7 @@ Content-Type: application/json
 }
 
 ###
-@userResetToken = 
+@userResetToken = {{$dotenv USER_RESET_TOKEN}}
 
 ### 2.4 Reset Password (User)
 POST {{baseUrl}}/api/auth/reset-password
