@@ -4,3 +4,4 @@ pgadmin-data/
 pgadmin-servers.json
 get-token.sh
 get-token.bat
+get-token.ps1
