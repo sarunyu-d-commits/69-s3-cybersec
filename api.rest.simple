@@ -36,7 +36,7 @@ Content-Type: application/json
 }
 
 ###
-@adminResetToken = ADMIN_RESET_TOKEN_FROM_EMAIL
+@adminResetToken = {{$dotenv ADMIN_RESET_TOKEN}}
 
 ### 1.3 Reset Password (Admin)
 POST {{baseUrl}}/admin/reset-password
@@ -85,7 +85,7 @@ Content-Type: application/json
 }
 
 ###
-@userResetToken = USER_RESET_TOKEN_FROM_EMAIL
+@userResetToken = {{$dotenv USER_RESET_TOKEN}}
 
 ### 2.4 Reset Password (User)
 POST {{baseUrl}}/api/auth/reset-password
