@@ -111,3 +111,136 @@ Authorization: Bearer {{userToken}}
     "password": "{{userNewPassword}}",
     "passwordConfirmation": "{{userNewPassword}}"
 }
+
+## 3. Content Section
+
+@studentCode = {{$dotenv STUDENT_CODE}}
+@studentFirstName = {{$dotenv STUDENT_FIRSTNAME}}
+@studentLastName = {{$dotenv STUDENT_LASTNAME}}
+@studentEmail = {{$dotenv STUDENT_EMAIL}}
+@studentNewEmail = {{$dotenv STUDENT_NEW_EMAIL}}
+
+@subjectCode = {{$dotenv SUBJECT_CODE}}
+@subjectName = {{$dotenv SUBJECT_NAME}}
+@subjectCredit = {{$dotenv SUBJECT_CREDIT}}
+@subjectNewName = {{$dotenv SUBJECT_NEW_NAME}}
+
+@teacherFirstName = {{$dotenv TEACHER_FIRSTNAME}}
+@teacherLastName = {{$dotenv TEACHER_LASTNAME}}
+@teacherEmail = {{$dotenv TEACHER_EMAIL}}
+@teacherNewEmail = {{$dotenv TEACHER_NEW_EMAIL}}
+
+### 3.1 Student
+
+### 3.1.1 Create (Student)
+# @name createStudent
+POST {{baseUrl}}/api/students
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+{
+    "data": {
+        "studentId": "{{studentCode}}",
+        "firstName": "{{studentFirstName}}",
+        "lastName": "{{studentLastName}}",
+        "email": "{{studentEmail}}"
+    }
+}
+
+###
+@studentId = {{createStudent.response.body.data.documentId}}
+
+### 3.1.2 List All (Student)
+GET {{baseUrl}}/api/students
+Authorization: Bearer {{userToken}}
+
+### 3.1.3 List with ID (Student)
+GET {{baseUrl}}/api/students/{{studentId}}
+Authorization: Bearer {{userToken}}
+
+### 3.1.4 Update (Student)
+PUT {{baseUrl}}/api/students/{{studentId}}
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+{
+    "data": {
+        "email": "{{studentNewEmail}}"
+    }
+}
+
+### 3.2 Subject
+
+### 3.2.1 Create (Subject)
+# @name createSubject
+POST {{baseUrl}}/api/subjects
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+{
+    "data": {
+        "code": "{{subjectCode}}",
+        "name": "{{subjectName}}",
+        "credit": {{subjectCredit}}
+    }
+}
+
+###
+@subjectId = {{createSubject.response.body.data.documentId}}
+
+### 3.2.2 List All (Subject)
+GET {{baseUrl}}/api/subjects
+Authorization: Bearer {{userToken}}
+
+### 3.2.3 List with ID (Subject)
+GET {{baseUrl}}/api/subjects/{{subjectId}}
+Authorization: Bearer {{userToken}}
+
+### 3.2.4 Update (Subject)
+PUT {{baseUrl}}/api/subjects/{{subjectId}}
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+{
+    "data": {
+        "name": "{{subjectNewName}}"
+    }
+}
+
+### 3.3 Teacher
+
+### 3.3.1 Create (Teacher)
+# @name createTeacher
+POST {{baseUrl}}/api/teachers
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+{
+    "data": {
+        "firstName": "{{teacherFirstName}}",
+        "lastName": "{{teacherLastName}}",
+        "email": "{{teacherEmail}}"
+    }
+}
+
+###
+@teacherId = {{createTeacher.response.body.data.documentId}}
+
+### 3.3.2 List All (Teacher)
+GET {{baseUrl}}/api/teachers
+Authorization: Bearer {{userToken}}
+
+### 3.3.3 List with ID (Teacher)
+GET {{baseUrl}}/api/teachers/{{teacherId}}
+Authorization: Bearer {{userToken}}
+
+### 3.3.4 Update (Teacher)
+PUT {{baseUrl}}/api/teachers/{{teacherId}}
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+{
+    "data": {
+        "email": "{{teacherNewEmail}}"
+    }
+}
