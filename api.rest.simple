@@ -1,4 +1,9 @@
 # REST (Simple - uses variable names, no raw values shown)
+#
+# วิธีใช้:
+#   Authorization ใช้ token จาก .env (ADMIN_TOKEN / USER_TOKEN) ไม่ต้องยิง Login ก่อน
+#   แต่ token หมดอายุตามเวลา (~30 วัน) ถ้าเจอ 401/403 ให้ยิง 1.1 / 2.2 Login เอา token ใหม่
+#   แล้วอัปเดตค่า ADMIN_TOKEN / USER_TOKEN ใน .env
 
 @baseUrl = {{$dotenv BASE_URL}}
 
@@ -25,7 +30,7 @@ Content-Type: application/json
 }
 
 ###
-@adminToken = {{adminLogin.response.body.data.token}}
+@adminToken = {{$dotenv ADMIN_TOKEN}}
 
 ### 1.2 Forgot Password (Admin)
 POST {{baseUrl}}/admin/forgot-password
@@ -74,7 +79,7 @@ Content-Type: application/json
 }
 
 ###
-@userToken = {{userLogin.response.body.jwt}}
+@userToken = {{$dotenv USER_TOKEN}}
 
 ### 2.3 Forgot Password (User)
 POST {{baseUrl}}/api/auth/forgot-password
@@ -113,22 +118,18 @@ Authorization: Bearer {{userToken}}
 }
 
 ## 3. Content Section
+# ทุก request ในส่วนนี้ใช้ @userToken จาก .env (USER_TOKEN) — ยิงได้ทันทีโดยไม่ต้อง login ก่อน
+# หมายเหตุ (3.1.1 Create Student): cardId เป็น unique — ถ้ายิงแล้วเจอ 400 แปลว่า cardId ซ้ำกับ record เก่า
+# ให้แก้ค่า STUDENT_CARD_ID ใน .env เป็นเลขใหม่ก่อนรัน (หรือลบ student เก่าผ่าน pgAdmin)
 
-@studentCode = {{$dotenv STUDENT_CODE}}
-@studentFirstName = {{$dotenv STUDENT_FIRSTNAME}}
-@studentLastName = {{$dotenv STUDENT_LASTNAME}}
-@studentEmail = {{$dotenv STUDENT_EMAIL}}
-@studentNewEmail = {{$dotenv STUDENT_NEW_EMAIL}}
+@studentName = {{$dotenv STUDENT_FIRSTNAME}} {{$dotenv STUDENT_LASTNAME}}
+@studentCardId = {{$dotenv STUDENT_CARD_ID}}
+@studentMobile = {{$dotenv STUDENT_MOBILE}}
 
-@subjectCode = {{$dotenv SUBJECT_CODE}}
 @subjectName = {{$dotenv SUBJECT_NAME}}
-@subjectCredit = {{$dotenv SUBJECT_CREDIT}}
 @subjectNewName = {{$dotenv SUBJECT_NEW_NAME}}
 
-@teacherFirstName = {{$dotenv TEACHER_FIRSTNAME}}
-@teacherLastName = {{$dotenv TEACHER_LASTNAME}}
-@teacherEmail = {{$dotenv TEACHER_EMAIL}}
-@teacherNewEmail = {{$dotenv TEACHER_NEW_EMAIL}}
+@teacherName = {{$dotenv TEACHER_FIRSTNAME}} {{$dotenv TEACHER_LASTNAME}}
 
 ### 3.1 Student
 
@@ -140,15 +141,14 @@ Authorization: Bearer {{userToken}}
 
 {
     "data": {
-        "studentId": "{{studentCode}}",
-        "firstName": "{{studentFirstName}}",
-        "lastName": "{{studentLastName}}",
-        "email": "{{studentEmail}}"
+        "name": "{{studentName}}",
+        "mobile": "{{studentMobile}}",
+        "cardId": "{{studentCardId}}"
     }
 }
 
 ###
-@studentId = {{createStudent.response.body.data.documentId}}
+@studentId = {{createStudent.response.body.data.id}}
 
 ### 3.1.2 List All (Student)
 GET {{baseUrl}}/api/students
@@ -165,7 +165,7 @@ Authorization: Bearer {{userToken}}
 
 {
     "data": {
-        "email": "{{studentNewEmail}}"
+        "name": "{{studentName}}"
     }
 }
 
@@ -179,14 +179,12 @@ Authorization: Bearer {{userToken}}
 
 {
     "data": {
-        "code": "{{subjectCode}}",
-        "name": "{{subjectName}}",
-        "credit": {{subjectCredit}}
+        "name": "{{subjectName}}"
     }
 }
 
 ###
-@subjectId = {{createSubject.response.body.data.documentId}}
+@subjectId = {{createSubject.response.body.data.id}}
 
 ### 3.2.2 List All (Subject)
 GET {{baseUrl}}/api/subjects
@@ -217,14 +215,12 @@ Authorization: Bearer {{userToken}}
 
 {
     "data": {
-        "firstName": "{{teacherFirstName}}",
-        "lastName": "{{teacherLastName}}",
-        "email": "{{teacherEmail}}"
+        "name": "{{teacherName}}"
     }
 }
 
 ###
-@teacherId = {{createTeacher.response.body.data.documentId}}
+@teacherId = {{createTeacher.response.body.data.id}}
 
 ### 3.3.2 List All (Teacher)
 GET {{baseUrl}}/api/teachers
@@ -241,6 +237,6 @@ Authorization: Bearer {{userToken}}
 
 {
     "data": {
-        "email": "{{teacherNewEmail}}"
+        "name": "{{teacherName}}"
     }
 }

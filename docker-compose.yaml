@@ -40,8 +40,17 @@ services:
       - DATABASE_PORT=5432
       - DATABASE_USERNAME=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+    volumes:
+      - ./config/plugins.js:/opt/app/config/plugins.js
     depends_on:
       - db
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: 69-s3-mailhog
+    ports:
+      - 8025:8025
+      - 1025:1025
 
 volumes:
   postgres_data:
