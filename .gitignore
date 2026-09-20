@@ -1,4 +1,5 @@
 .env
+Api.rest
 Regit
 pgadmin-data/
 pgadmin-servers.json
