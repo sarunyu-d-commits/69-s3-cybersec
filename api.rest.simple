@@ -100,3 +100,14 @@ Content-Type: application/json
 ### 2.5 Profile (User)
 GET {{baseUrl}}/api/users/me
 Authorization: Bearer {{userToken}}
+
+### 2.6 Change Password (User)
+POST {{baseUrl}}/api/auth/change-password
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+{
+    "currentPassword": "{{userPassword}}",
+    "password": "{{userNewPassword}}",
+    "passwordConfirmation": "{{userNewPassword}}"
+}
